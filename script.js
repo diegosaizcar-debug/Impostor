@@ -1,8 +1,61 @@
-const WORDS = [
-    "Playa", "Bosque", "Escuela", "Hospital", "Restaurante", 
-    "Biblioteca", "Gimnasio", "Supermercado", "Avión", "Barco",
-    "Circo", "Museo", "Cine", "Fiesta", "Ascensor", "Cocina" 
-];
+// Diccionario de categorías y palabras
+const CATEGORIES = {
+    "Lugares Comunes": [
+        "Playa", "Bosque", "Escuela", "Hospital", "Restaurante", 
+        "Biblioteca", "Gimnasio", "Supermercado", "Avión", "Barco",
+        "Teatro", "Parque", "Cafetería", "Banco", "Cine", "Museo",
+        "Oficina", "Farmacia", "Estación", "Ascensor"
+    ],
+    "Animales y Naturaleza": [
+        "Elefante", "Jirafa", "Cocodrilo", "Mariposa", "Pingüino",
+        "Volcán", "Desierto", "Océano", "Montaña", "Arcoíris",
+        "Canguro", "Abeja", "Hormiga", "Cebra", "Koala", "León",
+        "Serpiente", "Hielo", "Cueva", "Tornado"
+    ],
+    "Objetos del Hogar": [
+        "Refrigerador", "Sofá", "Televisión", "Microondas", "Sábana",
+        "Escoba", "Cepillo", "Ventana", "Almohada", "Tostadora",
+        "Espejo", "Cuchillo", "Lámpara", "Mesa", "Cortina", "Reloj",
+        "Candelabro", "Alfombra", "Paraguas", "Taza"
+    ],
+    "Alimentos": [
+        "Aguacate", "Sandía", "Brócoli", "Hamburguesa", "Spaghetti",
+        "Chocolate", "Cereza", "Panqueque", "Zanahoria", "Pimienta",
+        "Sushi", "Naranja", "Galleta", "Pera", "Mango", "Queso",
+        "Tomate", "Manzana", "Fresa", "Café"
+    ],
+    // NUEVAS CATEGORÍAS
+    "Tecnología y Gadgets": [
+        "Teléfono", "Auriculares", "Portátil", "Teclado", "Ratón",
+        "Impresora", "Cámara", "Altavoz", "Proyector", "Batería",
+        "Dron", "Cable", "Micrófono", "Antena", "Satélite", "Memoria",
+        "Robot", "Router", "Pantalla", "Código"
+    ],
+    "Ropa y Accesorios": [
+        "Bufanda", "Gorro", "Chaqueta", "Calcetín", "Corbata",
+        "Pendiente", "Collar", "Anillo", "Cartera", "Guantes",
+        "Cinturón", "Vestido", "Falda", "Zapatilla", "Bañador", "Tacón",
+        "Pijama", "Bolsa", "Tirantes", "Gafas"
+    ],
+    "Hogar y Arquitectura": [
+        "Chimenea", "Escalera", "Balcón", "Terraza", "Garaje",
+        "Azotea", "Sótano", "Ladrillo", "Cemento", "Tubería",
+        "Grifo", "Pared", "Techo", "Suelo", "Ventilador", "Jardín",
+        "Pasillo", "Puerta", "Despensa", "Balda"
+    ],
+    "Vehículos y Transporte": [
+        "Tren", "Bicicleta", "Autobús", "Metro", "Helicóptero",
+        "Submarino", "Cohete", "Motocicleta", "Patinete", "Camión",
+        "Neumático", "Freno", "Motor", "Gasolina", "Rueda", "Vela",
+        "Tractor", "Coche", "Globo", "Caravana"
+    ],
+    "Mixto y Abstracto": [
+        "Felicidad", "Misterio", "Silencio", "Sombra", "Evolución",
+        "Universo", "Amistad", "Sueño", "Historia", "Tiempo",
+        "Magia", "Gravedad", "Idea", "Ritmo", "Poesía", "Caos",
+        "Justicia", "Leyenda", "Eco", "Vibración"
+    ]
+};
 
 let players = [];
 let secretWord = "";
@@ -21,25 +74,31 @@ function hideAllScreens() {
 function startGame() {
     const namesInput = document.getElementById('player-names').value;
     const numImpostors = parseInt(document.getElementById('num-impostors').value);
+    const categoryName = document.getElementById('category-select').value;
     
-    // Procesa los nombres: divide por coma, elimina espacios, y filtra vacíos
+    // Procesa los nombres
     let playerNames = namesInput.split(',')
                                 .map(name => name.trim())
                                 .filter(name => name.length > 0);
     
     totalPlayers = playerNames.length;
 
-    // Validación de entradas
+    // Validación
     if (totalPlayers < 3 || numImpostors < 1 || numImpostors >= totalPlayers) {
         alert("Configuración inválida. Necesitas al menos 3 jugadores y al menos un tripulante.");
         return;
     }
 
-    // A. Seleccionar palabra secreta aleatoria
-    const randomIndex = Math.floor(Math.random() * WORDS.length);
-    secretWord = WORDS[randomIndex];
+    // Seleccionar palabra aleatoria de la categoría elegida
+    const wordList = CATEGORIES[categoryName];
+    if (!wordList || wordList.length === 0) {
+        alert("Error: La categoría seleccionada no tiene palabras.");
+        return;
+    }
+    const randomIndex = Math.floor(Math.random() * wordList.length);
+    secretWord = wordList[randomIndex];
 
-    // B. Crear lista de jugadores con nombres y asignar roles
+    // Asignación de roles
     players = playerNames.map(name => ({ name: name, role: 'Tripulante' }));
     
     let assignedImpostors = 0;
@@ -51,7 +110,7 @@ function startGame() {
         }
     }
     
-    // C. Preparar la pantalla para el primer jugador
+    // Preparar la pantalla para el primer jugador
     hideAllScreens();
     currentPlayerIndex = 0;
     document.getElementById('role-card').style.display = 'block';
@@ -61,17 +120,13 @@ function startGame() {
 // 2. Muestra la tarjeta del jugador actual o la pantalla de "Partida en Curso"
 function nextPlayerTurn() {
     if (currentPlayerIndex >= totalPlayers) {
-        // Todos han visto su rol, pasar a la pantalla de Partida en Curso
         hideAllScreens();
         document.getElementById('ongoing-game').style.display = 'block';
         return;
     }
 
     const player = players[currentPlayerIndex];
-    
-    // Muestra el nombre del jugador actual
     document.getElementById('current-player-name').textContent = player.name; 
-    
     document.getElementById('role-display').style.display = 'none';
     document.querySelector('#role-card > button').style.display = 'block'; 
 }
@@ -117,7 +172,6 @@ function displayFinalRoles() {
     
     players.forEach(player => {
         const li = document.createElement('li');
-        // Usamos el nombre en lugar del ID
         li.textContent = `${player.name}: ${player.role}`; 
         li.className = player.role === 'Impostor' ? 'impostor' : 'crewmate';
         finalRolesList.appendChild(li);
@@ -128,10 +182,28 @@ function displayFinalRoles() {
 function resetGame() {
     hideAllScreens();
     document.getElementById('setup').style.display = 'block';
-    // Opcional: limpiar el campo de nombres al reiniciar
     document.getElementById('player-names').value = ''; 
     players = [];
     secretWord = "";
     currentPlayerIndex = 0;
     totalPlayers = 0;
 }
+
+// Función para inicializar el selector de categorías al cargar la página
+function initCategorySelect() {
+    const select = document.getElementById('category-select');
+    if (!select) return; 
+
+    // Limpia opciones previas (si las hubiera)
+    select.innerHTML = ''; 
+
+    for (const category in CATEGORIES) {
+        const option = document.createElement('option');
+        option.value = category;
+        option.textContent = category;
+        select.appendChild(option);
+    }
+}
+
+// Llama a la inicialización de categorías al cargar el script
+document.addEventListener('DOMContentLoaded', initCategorySelect);
