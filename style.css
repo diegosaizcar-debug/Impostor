@@ -24,40 +24,54 @@ h1 {
     margin-bottom: 20px;
 }
 
+/* Nuevo estilo para agrupar label e input/select */
+.input-group {
+    margin-bottom: 15px; /* Espacio entre grupos de input */
+    text-align: left; /* Alinea los labels y inputs a la izquierda dentro del grupo */
+}
+
 label {
-    display: block;
-    margin-top: 15px;
+    display: block; /* Asegura que cada label esté en su propia línea dentro del input-group */
+    margin-bottom: 5px; /* Espacio entre label y su input/select */
     font-weight: 600;
+    color: #b0c4de; /* Un color más suave para los labels */
 }
 
-/* Nuevo estilo para la entrada de nombres */
-input[type="text"] {
+input[type="text"], 
+input[type="number"], /* Incluimos el input number aquí para que tenga el mismo estilo */
+.game-select {
     padding: 10px;
-    margin: 5px 0 15px 0;
+    margin: 0; /* Quitamos el margin para que el input-group lo controle */
     border: 1px solid #3d5a80;
     border-radius: 5px;
     background-color: #2a3a50;
     color: #f0f0f0;
-    width: 90%; /* Ancho completo para nombres */
-    box-sizing: border-box;
+    width: 100%; /* Ocupa todo el ancho disponible del input-group */
+    box-sizing: border-box; /* Incluye padding y border en el ancho total */
+    font-size: 16px;
 }
 
+/* Estilo específico para el selector (flecha personalizada) */
+.game-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f0f0f0'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+}
+
+/* Ajuste específico para el input de número si lo quieres más pequeño */
 input[type="number"] {
-    padding: 8px;
-    margin: 5px 0 15px 0;
-    border: 1px solid #3d5a80;
-    border-radius: 5px;
-    background-color: #2a3a50;
-    color: #f0f0f0;
-    width: 80px;
+    width: 80px; /* Tamaño específico para el número de impostores */
     text-align: center;
 }
+
 
 button {
     background-color: #3d5a80; 
     color: white;
     padding: 12px 25px;
-    margin-top: 20px;
+    margin-top: 25px; /* Más espacio sobre el botón */
     border: none;
     border-radius: 6px;
     cursor: pointer;
