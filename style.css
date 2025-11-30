@@ -1,0 +1,147 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #0f0f23;
+    color: #f0f0f0;
+}
+
+.container {
+    background-color: #1a2a40;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7);
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+}
+
+h1 {
+    color: #ff4d6d;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+/* Nuevo estilo para la entrada de nombres */
+input[type="text"] {
+    padding: 10px;
+    margin: 5px 0 15px 0;
+    border: 1px solid #3d5a80;
+    border-radius: 5px;
+    background-color: #2a3a50;
+    color: #f0f0f0;
+    width: 90%; /* Ancho completo para nombres */
+    box-sizing: border-box;
+}
+
+input[type="number"] {
+    padding: 8px;
+    margin: 5px 0 15px 0;
+    border: 1px solid #3d5a80;
+    border-radius: 5px;
+    background-color: #2a3a50;
+    color: #f0f0f0;
+    width: 80px;
+    text-align: center;
+}
+
+button {
+    background-color: #3d5a80; 
+    color: white;
+    padding: 12px 25px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 17px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #588da8;
+}
+
+/* Estilos de Tarjeta (Rol) */
+.card {
+    background-color: #2a3a50;
+    padding: 25px;
+    border-radius: 10px;
+    margin-top: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    border-left: 5px solid;
+}
+
+#role-display {
+    border-left-color: #ff4d6d;
+}
+
+.instruction {
+    color: #b0c4de;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+/* Estilos Específicos de Roles */
+.impostor-role {
+    color: #ff4d6d;
+    font-size: 1.6em;
+    font-weight: bold;
+    display: block;
+}
+
+.crew-role {
+    color: #5ee995;
+    font-size: 1.6em;
+    font-weight: bold;
+    display: block;
+}
+
+#secret-word-display {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+/* Estilos de la lista final */
+#final-roles-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    margin-top: 20px;
+}
+
+#final-roles-list li {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    background-color: #1a2a40;
+}
+
+.impostor {
+    color: #ff4d6d;
+    font-weight: bold;
+}
+
+.crewmate {
+    color: #5ee995;
+}
+
+.roles-title {
+    margin-top: 30px;
+    color: #b0c4de;
+}
+
+.ongoing-card {
+    border-left-color: #f7b32b;
+}
+
+.final-card {
+    border-left-color: #3d5a80;
+}

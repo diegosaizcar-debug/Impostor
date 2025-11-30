@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Impostor de Palabras</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🤫 El Impostor de Palabras</h1>
+        
+        <div id="setup"> 
+            <label for="player-names">Nombres de los Jugadores (separados por comas):</label>
+            <input type="text" id="player-names" placeholder="Ej: Ana, Luis, Pedro, Sofia">
+            
+            <label for="num-impostors">Número de Impostores:</label>
+            <input type="number" id="num-impostors" value="1" min="1" max="3">
+            <button onclick="startGame()">Comenzar Ronda</button>
+        </div>
+
+        <div id="role-card" style="display: none;">
+            <h2><span id="current-player-name"></span>, ¡Prepárate!</h2>
+            <p class="instruction">Pasa el dispositivo al siguiente jugador, y **no mires** la pantalla.</p>
+            <button onclick="showRole()">Ver mi Rol</button>
+            
+            <div id="role-display" class="card" style="display: none;">
+                <h3>Tu Rol es: <span id="role"></span></h3>
+                <p id="secret-word-display"></p>
+                <button onclick="hideRole()">Ocultar y Pasar</button>
+            </div>
+        </div>
+        
+        <div id="ongoing-game" style="display: none;">
+            <div class="card ongoing-card">
+                <h2>Partida en Curso... ⏳</h2>
+                <p class="instruction">¡El reparto de roles ha terminado! Es hora de debatir y votar.</p>
+                <p class="instruction">Cuando la conversación y la votación terminen, usa el botón de abajo.</p>
+                <button onclick="revealRoles()">Desvelar Todos los Roles</button>
+            </div>
+        </div>
+
+        <div id="end-game" style="display: none;">
+            <div class="card final-card">
+                <h2>¡Verdad Revelada! 🕵️</h2>
+                <p id="final-word"></p>
+                <h3 class="roles-title">Asignación de Roles</h3>
+                <ul id="final-roles-list"></ul>
+                <button onclick="resetGame()">Jugar de Nuevo</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
